@@ -3,17 +3,17 @@
 
   inputs = rec {
     nixos.url = "github:NixOS/nixpkgs/nixos-22.11";
-    flake-utils.url = "github:numtide/flake-utils";
-    pythoneda = {
-      url = "github:rydnr/pythoneda";
-      inputs.nixos.follows = "nixos";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.poetry2nix.follows = "flake-utils";
-    };
+    flake-utils.url = "github:numtide/flake-utils/v1.0.0";
     poetry2nix = {
-      url = "github:nix-community/poetry2nix";
+      url = "github:nix-community/poetry2nix/v1.28.0";
       inputs.nixpkgs.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
+    };
+    pythoneda = {
+      url = "github:rydnr/pythoneda/0.0.1a4";
+      inputs.nixos.follows = "nixos";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.poetry2nix.follows = "poetry2nix";
     };
   };
   outputs = inputs:
@@ -29,12 +29,21 @@
       in rec {
         packages = {
           pythoneda_git_repositories = pythonPackages.buildPythonPackage rec {
-            pname = "pythoneda_git_repositories";
-            version = "0.0.alpha.1";
+            pname = "pythoneda-git-repositories";
+            version = "0.0.1a1";
             src = ./.;
+            format = "pyproject";
+
+            nativeBuildInputs = [ pkgs.poetry ];
 
             propagatedBuildInputs = with pythonPackages;
               [ pythoneda.packages.${system}.pythoneda ];
+
+            checkInputs = with pythonPackages; [
+              pytest
+              pythoneda.packages.${system}.pythoneda
+            ];
+
             pythonImportsCheck = [ ];
 
             meta = with pkgs.lib; {

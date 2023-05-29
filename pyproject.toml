@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pythoneda-git-repositories"
-version = "0.0.1-alpha.1"
+version = "0.0.1a1"
 description = "Git repositories in PythonEDA"
 authors = ["rydnr <github@acm-sl.org>"]
 readme = "README.md"
@@ -16,6 +16,3 @@ pytest = "^7.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-generate-grpc = "scripts.make_grpc:main"
