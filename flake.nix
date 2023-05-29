@@ -28,9 +28,9 @@
         maintainers = with pkgs.lib.maintainers; [ ];
       in rec {
         packages = {
-          pythoneda_git_repositories = pythonPackages.buildPythonPackage rec {
+          pythoneda-git-repositories = pythonPackages.buildPythonPackage rec {
             pname = "pythoneda-git-repositories";
-            version = "0.0.1a1";
+            version = "0.0.1a2";
             src = ./.;
             format = "pyproject";
 
@@ -50,7 +50,7 @@
               inherit description license homepage maintainers;
             };
           };
-          default = packages.pythoneda_git_repositories;
+          default = packages.pythoneda-git-repositories;
           meta = with lib; {
             inherit description license homepage maintainers;
           };
