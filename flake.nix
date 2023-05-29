@@ -10,7 +10,7 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     pythoneda = {
-      url = "github:rydnr/pythoneda/0.0.1a4";
+      url = "github:rydnr/pythoneda/0.0.1a5";
       inputs.nixos.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
       inputs.poetry2nix.follows = "poetry2nix";
@@ -30,7 +30,7 @@
         packages = {
           pythoneda-git-repositories = pythonPackages.buildPythonPackage rec {
             pname = "pythoneda-git-repositories";
-            version = "0.0.1a2";
+            version = "0.0.1a3";
             src = ./.;
             format = "pyproject";
 
