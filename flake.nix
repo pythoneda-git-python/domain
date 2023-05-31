@@ -10,7 +10,7 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     pythoneda = {
-      url = "github:rydnr/pythoneda/0.0.1a5";
+      url = "github:pythoneda/base/0.0.1a7";
       inputs.nixos.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
       inputs.poetry2nix.follows = "poetry2nix";
@@ -25,12 +25,13 @@
         pythonPackages = python.pkgs;
         description = "Git repositories in PythonEDA";
         license = pkgs.lib.licenses.gpl3;
+        homepage = "https://github.com/pythoneda/git-repositories";
         maintainers = with pkgs.lib.maintainers; [ ];
       in rec {
         packages = {
           pythoneda-git-repositories = pythonPackages.buildPythonPackage rec {
             pname = "pythoneda-git-repositories";
-            version = "0.0.1a3";
+            version = "0.0.1a4";
             src = ./.;
             format = "pyproject";
 
