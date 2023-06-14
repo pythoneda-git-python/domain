@@ -2,15 +2,15 @@
   description = "Git repositories in PythonEDA";
 
   inputs = rec {
-    nixos.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixos.url = "github:NixOS/nixpkgs/nixos-23.05";
     flake-utils.url = "github:numtide/flake-utils/v1.0.0";
     poetry2nix = {
       url = "github:nix-community/poetry2nix/v1.28.0";
       inputs.nixpkgs.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
     };
-    pythoneda = {
-      url = "github:pythoneda/base/0.0.1a7";
+    pythoneda-base = {
+      url = "github:pythoneda/base/0.0.1a12";
       inputs.nixos.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
       inputs.poetry2nix.follows = "poetry2nix";
@@ -27,41 +27,93 @@
         license = pkgs.lib.licenses.gpl3;
         homepage = "https://github.com/pythoneda/git-repositories";
         maintainers = with pkgs.lib.maintainers; [ ];
-      in rec {
-        packages = {
-          pythoneda-git-repositories = pythonPackages.buildPythonPackage rec {
+        nixpkgsRelease = "nixos-23.05";
+        shared = import ./nix/devShells.nix;
+        pythoneda-git-repositories-for = { version, pythoneda-base, python }:
+          python.pkgs.buildPythonPackage rec {
             pname = "pythoneda-git-repositories";
-            version = "0.0.1a4";
+            inherit version;
             src = ./.;
             format = "pyproject";
 
-            nativeBuildInputs = [ pkgs.poetry ];
+            nativeBuildInputs = with python.pkgs; [ pip poetry-core ];
 
-            propagatedBuildInputs = with pythonPackages;
-              [ pythoneda.packages.${system}.pythoneda ];
+            propagatedBuildInputs = with python.pkgs; [ pythoneda-base ];
 
-            checkInputs = with pythonPackages; [
-              pytest
-              pythoneda.packages.${system}.pythoneda
-            ];
+            checkInputs = with python.pkgs; [ pytest pythoneda-base ];
 
-            pythonImportsCheck = [ ];
+            pythonImportsCheck = [ "pythonedagitrepositories" ];
+
+            postInstall = ''
+              mkdir $out/dist
+              cp dist/*.whl $out/dist
+            '';
 
             meta = with pkgs.lib; {
               inherit description license homepage maintainers;
             };
           };
-          default = packages.pythoneda-git-repositories;
-          meta = with lib; {
-            inherit description license homepage maintainers;
+        pythoneda-git-repositories-0_0_1a5-for = { pythoneda-base, python }:
+          pythoneda-git-repositories-for {
+            version = "0.0.1a5";
+            inherit pythoneda-base python;
           };
+      in rec {
+        packages = rec {
+          pythoneda-git-repositories-0_0_1a5-python38 =
+            pythoneda-git-repositories-0_0_1a5-for {
+              pythoneda-base =
+                pythoneda-base.packages.${system}.pythoneda-base-latest-python38;
+              python = pkgs.python38;
+            };
+          pythoneda-git-repositories-0_0_1a5-python39 =
+            pythoneda-git-repositories-0_0_1a5-for {
+              pythoneda-base =
+                pythoneda-base.packages.${system}.pythoneda-base-latest-python39;
+              python = pkgs.python39;
+            };
+          pythoneda-git-repositories-0_0_1a5-python310 =
+            pythoneda-git-repositories-0_0_1a5-for {
+              pythoneda-base =
+                pythoneda-base.packages.${system}.pythoneda-base-latest-python310;
+              python = pkgs.python310;
+            };
+          pythoneda-git-repositories-latest-python38 =
+            pythoneda-git-repositories-0_0_1a5-python38;
+          pythoneda-git-repositories-latest-python39 =
+            pythoneda-git-repositories-0_0_1a5-python39;
+          pythoneda-git-repositories-latest-python310 =
+            pythoneda-git-repositories-0_0_1a5-python310;
+          pythoneda-git-repositories-latest =
+            pythoneda-git-repositories-latest-python310;
+          default = packages.pythoneda-git-repositories-latest;
         };
         defaultPackage = packages.default;
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs.python3Packages; [ packages.default ];
-        };
-        shell = flake-utils.lib.mkShell {
-          packages = system: [ self.packages.${system}.default ];
+        devShells = rec {
+          pythoneda-git-repositories-0_0_1a5-python38 = shared.devShell-for {
+            package = packages.pythoneda-git-repositories-0_0_1a5-python38;
+            python = pkgs.python38;
+            inherit pkgs nixpkgsRelease;
+          };
+          pythoneda-git-repositories-0_0_1a5-python39 = shared.devShell-for {
+            package = packages.pythoneda-git-repositories-0_0_1a5-python39;
+            python = pkgs.python39;
+            inherit pkgs nixpkgsRelease;
+          };
+          pythoneda-git-repositories-0_0_1a5-python310 = shared.devShell-for {
+            package = packages.pythoneda-git-repositories-0_0_1a5-python310;
+            python = pkgs.python310;
+            inherit pkgs nixpkgsRelease;
+          };
+          pythoneda-git-repositories-latest-python38 =
+            pythoneda-git-repositories-0_0_1a5-python38;
+          pythoneda-git-repositories-latest-python39 =
+            pythoneda-git-repositories-0_0_1a5-python39;
+          pythoneda-git-repositories-latest-python310 =
+            pythoneda-git-repositories-0_0_1a5-python310;
+          pythoneda-git-repositories-latest =
+            pythoneda-git-repositories-latest-python310;
+          default = packages.pythoneda-git-repositories-latest;
         };
       });
 }

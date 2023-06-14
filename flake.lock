@@ -18,16 +18,16 @@
     },
     "nixos": {
       "locked": {
-        "lastModified": 1685314633,
-        "narHash": "sha256-8LXBPqTQXl5ofkjpJ18JcbmLJ/lWDoMxtUwiDYv0wro=",
+        "lastModified": 1686513595,
+        "narHash": "sha256-H3JNqj7TEiMx5rd8lRiONvgFZvmf3kmwHI2umDdqgFY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "c8a17ce7abc03c50cd072e9e6c9b389c5f61836b",
+        "rev": "bb8b5735d6f7e06b9ddd27de115b0600c1ffbdb4",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-22.11",
+        "ref": "nixos-23.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -56,7 +56,7 @@
         "type": "github"
       }
     },
-    "pythoneda": {
+    "pythoneda-base": {
       "inputs": {
         "flake-utils": [
           "flake-utils"
@@ -69,17 +69,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1685370987,
-        "narHash": "sha256-N8VF0yTdVimxLgIR9y8j1XleuIJxtBNflIPGBc6AyDw=",
-        "owner": "rydnr",
-        "repo": "pythoneda",
-        "rev": "c82d4288068473673e7cb85a4ae19cb40b3d9758",
+        "lastModified": 1686758262,
+        "narHash": "sha256-k61NKVVCTbnagD+1C6tDp374dc7s86/SAQ0vbKgwUis=",
+        "owner": "pythoneda",
+        "repo": "base",
+        "rev": "aaa1b56b73c685db3598c3073283d37d032e6b80",
         "type": "github"
       },
       "original": {
-        "owner": "rydnr",
-        "ref": "0.0.1a5",
-        "repo": "pythoneda",
+        "owner": "pythoneda",
+        "ref": "0.0.1a12",
+        "repo": "base",
         "type": "github"
       }
     },
@@ -88,7 +88,7 @@
         "flake-utils": "flake-utils",
         "nixos": "nixos",
         "poetry2nix": "poetry2nix",
-        "pythoneda": "pythoneda"
+        "pythoneda-base": "pythoneda-base"
       }
     }
   },

@@ -1,7 +1,27 @@
-from PythonEDA.event import Event
-from PythonEDA.event_listener import EventListener
-from PythonEDAGitRepositories.git_repo import GitRepo
-from PythonEDAGitRepositories.git_repo_requested import GitRepoRequested
+"""
+pythonedagitrepositories/git_repo_resolver.py
+
+This file defines the GitRepoResolver event listener class.
+
+Copyright (C) 2023-today rydnr's pythoneda/git-repositories
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+from pythoneda.event import Event
+from pythoneda.event_listener import EventListener
+from pythonedagitrepositories.git_repo import GitRepo
+from pythonedagitrepositories.git_repo_requested import GitRepoRequested
 
 import asyncio
 import logging
@@ -11,17 +31,35 @@ from typing import Dict, List, Type
 class GitRepoResolver(EventListener):
     """
     Resolves git repositories.
+
+    Class name: GitRepoResolver
+
+    Responsibilities:
+        - Resolves git repositories.
+        - Listens for GitRepoRequested events.
+
+    Collaborators:
+        - GitRepoRequested: Triggers this class to resolve git repositories.
     """
 
     @classmethod
     def supported_events(cls) -> List[Type[Event]]:
         """
         Retrieves the list of supported event classes.
+        :return: The list of supported events.
+        :rtype: List
         """
         return [ GitRepoRequested ]
 
     @classmethod
     def fix_url(cls, url: str) -> str:
+        """
+        Fixes given repository url.
+        :param url: The respository url.
+        :type url: str
+        :return: The fixed url.
+        :rtype: str
+        """
         result = url
         if result.endswith("/issues"):
             result = result.removesuffix("/issues")
@@ -29,6 +67,13 @@ class GitRepoResolver(EventListener):
 
     @classmethod
     def extract_urls(cls, info: Dict) -> List[str]:
+        """
+        Extracts the urls from the metadata of the Python project.
+        :param info: The metadata.
+        :type info: Dict
+        :return: The list of urls.
+        :rtype: List[str]
+        """
         result = []
         project_urls = info.get("project_urls", {})
         for url in [
@@ -54,6 +99,13 @@ class GitRepoResolver(EventListener):
 
     @classmethod
     async def listenGitRepoRequested(cls, event: GitRepoRequested) -> GitRepo:
+        """
+        Gets notified when a GitRepoRequested event is emitted.
+        :param event: The event.
+        :type event: GitRepoRequested
+        :return: The GitRepo found, if any.
+        :rtype: GitRepo
+        """
         for url in cls.extract_urls(event.info):
             repo_url, subfolder = GitRepo.extract_url_and_subfolder(url)
             if GitRepo.url_is_a_git_repo(repo_url):
