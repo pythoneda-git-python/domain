@@ -1,5 +1,5 @@
 """
-pythonedagitrepositories/git_add_failed.py
+pythonedagitpython/git_add_failed.py
 
 This file defines the GitAddFailed exception class.
 

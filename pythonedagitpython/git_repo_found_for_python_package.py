@@ -1,5 +1,5 @@
 """
-pythonedagitrepositories/git_repo_found_for_python_package.py
+pythonedagitpython/git_repo_found_for_python_package.py
 
 This file defines the GitRepoFoundForPythonPackage event class.
 
@@ -23,6 +23,7 @@ from pythoneda.value_object import attribute, primary_key_attribute
 
 from typing import Dict
 
+
 class GitRepoFoundForPythonPackage(Event):
     """
     Represents the event when a git repository has been found for a Python package.
@@ -43,7 +44,7 @@ class GitRepoFoundForPythonPackage(Event):
         url: str,
         tag: str,
         metadata: Dict,
-        subfolder: str
+        subfolder: str,
     ):
         """
         Creates a new GitRepoFoundForPythonPackage instance.

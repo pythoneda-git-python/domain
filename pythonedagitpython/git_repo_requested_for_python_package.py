@@ -1,5 +1,5 @@
 """
-pythonedagitrepositories/git_repo_requested_for_python_package.py
+pythonedagitpython/git_repo_requested_for_python_package.py
 
 This file defines the GitRepoRequestedForPythonPackage event class.
 
@@ -23,6 +23,7 @@ from PythonEDA.value_object import attribute, primary_key_attribute
 
 from typing import Dict
 
+
 class GitRepoRequestedForPythonPackage(Event):
     """
     Represents the event when a git repository has been requested for a given Python package.
@@ -36,7 +37,9 @@ class GitRepoRequestedForPythonPackage(Event):
         - None
     """
 
-    def __init__(self, packageName: str, packageVersion: str, info: Dict, release: Dict):
+    def __init__(
+        self, packageName: str, packageVersion: str, info: Dict, release: Dict
+    ):
         """
         Creates a new GitRepoRequestedForPythonPackage instance.
         :param packageName: The name of the Python package.

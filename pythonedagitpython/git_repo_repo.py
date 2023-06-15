@@ -1,5 +1,5 @@
 """
-pythonedagitrepositories/git_repo_repo.py
+pythonedagitpython/git_repo_repo.py
 
 This file defines the GitRepoRepo class.
 
@@ -19,11 +19,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from pythoneda.repo import Repo
-from pythonedagitrepositories.git_repo import GitRepo
+from pythonedagitpython.git_repo import GitRepo
 
 from typing import Dict
 import logging
 import subprocess
+
 
 class GitRepoRepo(Repo):
     """
@@ -55,7 +56,9 @@ class GitRepoRepo(Repo):
         :return: The git repository metadata.
         :rtype: Dict[str, str]
         """
-        raise NotImplementedError("find_by_url_and_rev() must be implemented by subclasses")
+        raise NotImplementedError(
+            "find_by_url_and_rev() must be implemented by subclasses"
+        )
 
     def fix_rev(self, url: str, rev: str, subfolder: str) -> str:
         """
@@ -71,12 +74,12 @@ class GitRepoRepo(Repo):
         """
         result = None
         owner, repo_name = GitRepo.extract_repo_owner_and_repo_name(url)
-        attempts = [ rev, f'v{rev}', f'{repo_name}-{rev}', f'{repo_name}_{rev}' ]
+        attempts = [rev, f"v{rev}", f"{repo_name}-{rev}", f"{repo_name}_{rev}"]
         if subfolder:
             # Attempting to support monorepos such as `azure-sdk-for-python`
-            last_part_of_subfolder = subfolder.split('/')[-1]
-            attempts.append(f'{last_part_of_subfolder}_{rev}')
-            attempts.append(f'{last_part_of_subfolder}-{rev}')
+            last_part_of_subfolder = subfolder.split("/")[-1]
+            attempts.append(f"{last_part_of_subfolder}_{rev}")
+            attempts.append(f"{last_part_of_subfolder}-{rev}")
 
         for tag in attempts:
             if self.revision_exists(url, tag):

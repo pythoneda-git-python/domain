@@ -1,5 +1,5 @@
 """
-pythonedagitrepositories/git_repo_resolver.py
+pythonedagitpython/git_repo_resolver.py
 
 This file defines the GitRepoResolver event listener class.
 
@@ -20,8 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from pythoneda.event import Event
 from pythoneda.event_listener import EventListener
-from pythonedagitrepositories.git_repo import GitRepo
-from pythonedagitrepositories.git_repo_requested import GitRepoRequested
+from pythonedagitpython.git_repo import GitRepo
+from pythonedagitpython.git_repo_requested import GitRepoRequested
 
 import asyncio
 import logging
@@ -49,7 +49,7 @@ class GitRepoResolver(EventListener):
         :return: The list of supported events.
         :rtype: List
         """
-        return [ GitRepoRequested ]
+        return [GitRepoRequested]
 
     @classmethod
     def fix_url(cls, url: str) -> str:
@@ -109,13 +109,17 @@ class GitRepoResolver(EventListener):
         for url in cls.extract_urls(event.info):
             repo_url, subfolder = GitRepo.extract_url_and_subfolder(url)
             if GitRepo.url_is_a_git_repo(repo_url):
-                asyncio.ensure_future(cls.emit(
-                    GitRepoFound(
-                        event.package_name, event.package_version, repo_url, subfolder
+                asyncio.ensure_future(
+                    cls.emit(
+                        GitRepoFound(
+                            event.package_name,
+                            event.package_version,
+                            repo_url,
+                            subfolder,
+                        )
                     )
-                ))
+                )
                 break
         logging.getLogger(__name__).warn(
             f"I couldn't obtain a git repo url from the project's urls"
         )
-

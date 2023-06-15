@@ -1,5 +1,5 @@
 """
-pythonedagitrepositories/git_repo.py
+pythonedagitpython/git_repo.py
 
 This file defines the GitRepo class.
 
@@ -20,8 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from pythoneda.entity import Entity
 from pythoneda.value_object import attribute
-from pythonedagitrepositories.error_cloning_git_repository import ErrorCloningGitRepository
-from pythonedagitrepositories.git_checkout_failed import GitCheckoutFailed
+from pythonedagitpython.error_cloning_git_repository import ErrorCloningGitRepository
+from pythonedagitpython.git_checkout_failed import GitCheckoutFailed
 
 import logging
 import os
@@ -29,6 +29,7 @@ import re
 import subprocess
 from urllib.parse import urlparse
 from typing import Dict
+
 
 class GitRepo(Entity):
     """
@@ -42,6 +43,7 @@ class GitRepo(Entity):
     Collaborators:
         - None
     """
+
     def __init__(self, url: str, rev: str, repoInfo: Dict, subfolder=None):
         """
         Creates a new Git repository instance.
@@ -152,7 +154,7 @@ class GitRepo(Entity):
         :rtype: bool
         """
         try:
-            subprocess.check_output(['git', 'ls-remote', url], stderr=subprocess.STDOUT)
+            subprocess.check_output(["git", "ls-remote", url], stderr=subprocess.STDOUT)
             return True
         except subprocess.CalledProcessError:
             return False
@@ -181,9 +183,16 @@ class GitRepo(Entity):
         :return: Such checksum.
         :rtype: str
         """
-        result = subprocess.run(['nix-prefetch-git', '--deepClone', f'{self.url}/tree/{self.rev}'], check=True, capture_output=True, text=True)
+        result = subprocess.run(
+            ["nix-prefetch-git", "--deepClone", f"{self.url}/tree/{self.rev}"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
         output = result.stdout
-        logging.getLogger(__name__).debug(f'nix-prefetch-git --deepClone {self.url}/tree/{self.rev} -> {output}')
+        logging.getLogger(__name__).debug(
+            f"nix-prefetch-git --deepClone {self.url}/tree/{self.rev} -> {output}"
+        )
 
         return output.splitlines()[-1]
 
@@ -200,13 +209,27 @@ class GitRepo(Entity):
         result = os.path.join(folder, subfolder)
 
         try:
-            subprocess.run(['git', 'clone', self.url, subfolder], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, cwd=folder)
+            subprocess.run(
+                ["git", "clone", self.url, subfolder],
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                cwd=folder,
+            )
         except subprocess.CalledProcessError as err:
             logging.getLogger(__name__).error(err.stdout)
             logging.getLogger(__name__).error(err.stderr)
             raise ErrorCloningGitRepository(self.url, folder)
         try:
-            subprocess.run(['git', 'checkout', self.rev], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, cwd=result)
+            subprocess.run(
+                ["git", "checkout", self.rev],
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                cwd=result,
+            )
         except subprocess.CalledProcessError as err:
             logging.getLogger(__name__).error(err.stdout)
             logging.getLogger(__name__).error(err.stderr)
@@ -224,14 +247,14 @@ class GitRepo(Entity):
         :rtype: tuple
         """
         parsed_url = urlparse(url)
-        path_parts = parsed_url.path.split('/')
+        path_parts = parsed_url.path.split("/")
 
-        if len(path_parts) > 4 and path_parts[3] == 'tree':
+        if len(path_parts) > 4 and path_parts[3] == "tree":
             repo_url = f"{parsed_url.scheme}://{parsed_url.netloc}/{path_parts[1]}/{path_parts[2]}"
-            subfolder = '/'.join(path_parts[5:])
+            subfolder = "/".join(path_parts[5:])
         elif len(path_parts) > 3:
             repo_url = f"{parsed_url.scheme}://{parsed_url.netloc}/{path_parts[1]}/{path_parts[2]}"
-            subfolder = '/'.join(path_parts[3:])
+            subfolder = "/".join(path_parts[3:])
         else:
             repo_url = url
             subfolder = None
@@ -245,4 +268,4 @@ class GitRepo(Entity):
         :rtype: bool
         """
         parsed_url = urlparse(self.url)
-        return parsed_url.netloc == 'github.com'
+        return parsed_url.netloc == "github.com"

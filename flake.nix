@@ -1,5 +1,5 @@
 {
-  description = "Git repositories in PythonEDA";
+  description = "Git repositories for Python projects";
 
   inputs = rec {
     nixos.url = "github:NixOS/nixpkgs/nixos-23.05";
@@ -23,15 +23,15 @@
         pkgs = import nixos { inherit system; };
         python = pkgs.python3;
         pythonPackages = python.pkgs;
-        description = "Git repositories in PythonEDA";
+        description = "Git repositories for Python projects";
         license = pkgs.lib.licenses.gpl3;
-        homepage = "https://github.com/pythoneda/git-repositories";
+        homepage = "https://github.com/pythoneda/git-python";
         maintainers = with pkgs.lib.maintainers; [ ];
         nixpkgsRelease = "nixos-23.05";
         shared = import ./nix/devShells.nix;
-        pythoneda-git-repositories-for = { version, pythoneda-base, python }:
+        pythoneda-git-python-for = { version, pythoneda-base, python }:
           python.pkgs.buildPythonPackage rec {
-            pname = "pythoneda-git-repositories";
+            pname = "pythoneda-git-python";
             inherit version;
             src = ./.;
             format = "pyproject";
@@ -42,7 +42,7 @@
 
             checkInputs = with python.pkgs; [ pytest pythoneda-base ];
 
-            pythonImportsCheck = [ "pythonedagitrepositories" ];
+            pythonImportsCheck = [ "pythonedagitpython" ];
 
             postInstall = ''
               mkdir $out/dist
@@ -53,67 +53,65 @@
               inherit description license homepage maintainers;
             };
           };
-        pythoneda-git-repositories-0_0_1a5-for = { pythoneda-base, python }:
-          pythoneda-git-repositories-for {
-            version = "0.0.1a5";
+        pythoneda-git-python-0_0_1a6-for = { pythoneda-base, python }:
+          pythoneda-git-python-for {
+            version = "0.0.1a6";
             inherit pythoneda-base python;
           };
       in rec {
         packages = rec {
-          pythoneda-git-repositories-0_0_1a5-python38 =
-            pythoneda-git-repositories-0_0_1a5-for {
+          pythoneda-git-python-0_0_1a6-python38 =
+            pythoneda-git-python-0_0_1a6-for {
               pythoneda-base =
                 pythoneda-base.packages.${system}.pythoneda-base-latest-python38;
               python = pkgs.python38;
             };
-          pythoneda-git-repositories-0_0_1a5-python39 =
-            pythoneda-git-repositories-0_0_1a5-for {
+          pythoneda-git-python-0_0_1a6-python39 =
+            pythoneda-git-python-0_0_1a6-for {
               pythoneda-base =
                 pythoneda-base.packages.${system}.pythoneda-base-latest-python39;
               python = pkgs.python39;
             };
-          pythoneda-git-repositories-0_0_1a5-python310 =
-            pythoneda-git-repositories-0_0_1a5-for {
+          pythoneda-git-python-0_0_1a6-python310 =
+            pythoneda-git-python-0_0_1a6-for {
               pythoneda-base =
                 pythoneda-base.packages.${system}.pythoneda-base-latest-python310;
               python = pkgs.python310;
             };
-          pythoneda-git-repositories-latest-python38 =
-            pythoneda-git-repositories-0_0_1a5-python38;
-          pythoneda-git-repositories-latest-python39 =
-            pythoneda-git-repositories-0_0_1a5-python39;
-          pythoneda-git-repositories-latest-python310 =
-            pythoneda-git-repositories-0_0_1a5-python310;
-          pythoneda-git-repositories-latest =
-            pythoneda-git-repositories-latest-python310;
-          default = packages.pythoneda-git-repositories-latest;
+          pythoneda-git-python-latest-python38 =
+            pythoneda-git-python-0_0_1a6-python38;
+          pythoneda-git-python-latest-python39 =
+            pythoneda-git-python-0_0_1a6-python39;
+          pythoneda-git-python-latest-python310 =
+            pythoneda-git-python-0_0_1a6-python310;
+          pythoneda-git-python-latest = pythoneda-git-python-latest-python310;
+          default = packages.pythoneda-git-python-latest;
         };
         defaultPackage = packages.default;
         devShells = rec {
-          pythoneda-git-repositories-0_0_1a5-python38 = shared.devShell-for {
-            package = packages.pythoneda-git-repositories-0_0_1a5-python38;
+          pythoneda-git-python-0_0_1a6-python38 = shared.devShell-for {
+            package = packages.pythoneda-git-python-0_0_1a6-python38;
             python = pkgs.python38;
             inherit pkgs nixpkgsRelease;
           };
-          pythoneda-git-repositories-0_0_1a5-python39 = shared.devShell-for {
-            package = packages.pythoneda-git-repositories-0_0_1a5-python39;
+          pythoneda-git-python-0_0_1a6-python39 = shared.devShell-for {
+            package = packages.pythoneda-git-python-0_0_1a6-python39;
             python = pkgs.python39;
             inherit pkgs nixpkgsRelease;
           };
-          pythoneda-git-repositories-0_0_1a5-python310 = shared.devShell-for {
-            package = packages.pythoneda-git-repositories-0_0_1a5-python310;
+          pythoneda-git-python-0_0_1a6-python310 = shared.devShell-for {
+            package = packages.pythoneda-git-python-0_0_1a6-python310;
             python = pkgs.python310;
             inherit pkgs nixpkgsRelease;
           };
-          pythoneda-git-repositories-latest-python38 =
-            pythoneda-git-repositories-0_0_1a5-python38;
-          pythoneda-git-repositories-latest-python39 =
-            pythoneda-git-repositories-0_0_1a5-python39;
-          pythoneda-git-repositories-latest-python310 =
-            pythoneda-git-repositories-0_0_1a5-python310;
-          pythoneda-git-repositories-latest =
-            pythoneda-git-repositories-latest-python310;
-          default = packages.pythoneda-git-repositories-latest;
+          pythoneda-git-python-latest-python38 =
+            pythoneda-git-python-0_0_1a6-python38;
+          pythoneda-git-python-latest-python39 =
+            pythoneda-git-python-0_0_1a6-python39;
+          pythoneda-git-python-latest-python310 =
+            pythoneda-git-python-0_0_1a6-python310;
+          pythoneda-git-python-latest = pythoneda-git-python-latest-python310;
+          default = pythoneda-git-python-latest;
         };
       });
 }

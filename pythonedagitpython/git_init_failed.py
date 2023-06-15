@@ -1,7 +1,7 @@
 """
-pythonedagitrepositories/error_cloning_git_repository.py
+pythonedagitpython/git_init_failed.py
 
-This file defines the ErrorCloningGitRepository exception class.
+This file defines the GitInitFailed exception class.
 
 Copyright (C) 2023-today rydnr's pythoneda/git-repositories
 
@@ -18,25 +18,37 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-class ErrorCloningGitRepository(Exception):
-    """
-    Running git clone [url] failed.
 
-    Class name: ErrorCloningGitRepository
+
+class GitInitFailed(Exception):
+    """
+    git init failed.
+
+    Class name: GitInitFailed
 
     Responsibilities:
-        - Represent the error running git clone.
+        - Represent an error when initializing a git repository.
 
     Collaborators:
         - None
     """
 
-    def __init__(self, url: str, folder: str):
+    def __init__(self, folder: str, output: str):
         """
         Creates a new instance.
-        :param url: The url of the repository.
-        :type url: str
-        :param folder: The folder where the repository was being cloned.
+        :param folder: The repository folder.
         :type folder: str
+        :param output: The output of the git init command.
+        :type output: str
         """
-        super().__init__('"git clone {url}" in folder {folder} failed')
+        super().__init__(f'"git init" failed (in {folder})')
+        self._output = output
+
+    @property
+    def output(self) -> str:
+        """
+        Retrieves the output of the command.
+        :return: Such output.
+        :rtype: str
+        """
+        return self._output
