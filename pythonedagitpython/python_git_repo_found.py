@@ -1,9 +1,9 @@
 """
-pythonedagitpython/git_repo_found_for_python_package.py
+pythonedagitpython/python_git_repo_found.py
 
-This file defines the GitRepoFoundForPythonPackage event class.
+This file defines the PythonGitRepoFound event class.
 
-Copyright (C) 2023-today rydnr's pythoneda/git-repositories
+Copyright (C) 2023-today rydnr's pythoneda/git-python
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ from pythoneda.value_object import attribute, primary_key_attribute
 from typing import Dict
 
 
-class GitRepoFoundForPythonPackage(Event):
+class PythonGitRepoFound(Event):
     """
     Represents the event when a git repository has been found for a Python package.
 
@@ -47,7 +47,7 @@ class GitRepoFoundForPythonPackage(Event):
         subfolder: str,
     ):
         """
-        Creates a new GitRepoFoundForPythonPackage instance.
+        Creates a new PythonGitRepoFound instance.
         :param packageName: The Python package name.
         :type packageName: str
         :param packageVersion: The Python package version.

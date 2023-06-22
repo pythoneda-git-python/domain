@@ -3,7 +3,7 @@ pythonedagitpython/git_repo_repo.py
 
 This file defines the GitRepoRepo class.
 
-Copyright (C) 2023-today rydnr's pythoneda/git-repositories
+Copyright (C) 2023-today rydnr's pythoneda/git-python
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,22 +19,23 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from pythoneda.repo import Repo
-from pythonedagitpython.git_repo import GitRepo
+from pythonedagitpython.python_git_repo import PythonGitRepo
 
+import abc
 from typing import Dict
 import logging
 import subprocess
 
 
-class GitRepoRepo(Repo):
+class PythonGitRepoRepo(Repo, abc.ABC):
     """
-    A subclass of Repo that manages Git repositories.
+    A subclass of Repo that manages Git repositories of Python projects.
 
     Class name: GitRepoRepo
 
     Responsibilities:
-        - Implements a repository of GitRepo instances.
-        - Takes care of accessing information about GitRepo instances.
+        - Implements a repository of PythonGitRepo instances.
+        - Takes care of accessing information about PythonGitRepo instances.
 
     Collaborators:
         - It's a port. Adapters will have collaborators themselves.
@@ -42,10 +43,11 @@ class GitRepoRepo(Repo):
 
     def __init__(self):
         """
-        Creates a new GitRepoRepo instance.
+        Creates a new PythonGitRepoRepo instance.
         """
         super().__init__(GitRepo)
 
+    @abc.abstractmethod
     def find_by_url_and_rev(self, url: str, revision: str) -> Dict[str, str]:
         """
         Retrieves the git repository for given url and revision.
@@ -73,7 +75,7 @@ class GitRepoRepo(Repo):
         :rtype: str
         """
         result = None
-        owner, repo_name = GitRepo.extract_repo_owner_and_repo_name(url)
+        owner, repo_name = PythonGitRepo.extract_repo_owner_and_repo_name(url)
         attempts = [rev, f"v{rev}", f"{repo_name}-{rev}", f"{repo_name}_{rev}"]
         if subfolder:
             # Attempting to support monorepos such as `azure-sdk-for-python`
@@ -91,6 +93,7 @@ class GitRepoRepo(Repo):
 
         return result
 
+    @abc.abstractmethod
     def get_latest_tag(self, user: str, repo: str) -> str:
         """
         Retrieves the latest tag of given repository.

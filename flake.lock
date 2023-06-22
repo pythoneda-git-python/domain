@@ -32,30 +32,6 @@
         "type": "github"
       }
     },
-    "poetry2nix": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixos"
-        ]
-      },
-      "locked": {
-        "lastModified": 1651700095,
-        "narHash": "sha256-xeo702X83g7s2J22AAvtN/FkB1M0TUbZ+SGuMMNzk8s=",
-        "owner": "nix-community",
-        "repo": "poetry2nix",
-        "rev": "b00b6b6ef8471e912f2f09e826ca9acc127cee4f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "v1.28.0",
-        "repo": "poetry2nix",
-        "type": "github"
-      }
-    },
     "pythoneda-base": {
       "inputs": {
         "flake-utils": [
@@ -63,23 +39,47 @@
         ],
         "nixos": [
           "nixos"
-        ],
-        "poetry2nix": [
-          "poetry2nix"
         ]
       },
       "locked": {
-        "lastModified": 1686758262,
-        "narHash": "sha256-k61NKVVCTbnagD+1C6tDp374dc7s86/SAQ0vbKgwUis=",
+        "lastModified": 1687444738,
+        "narHash": "sha256-oxyPAWP+egkj1sX/KcFggtmrwQDmgd75Yq8VTO2fIh4=",
         "owner": "pythoneda",
         "repo": "base",
-        "rev": "aaa1b56b73c685db3598c3073283d37d032e6b80",
+        "rev": "7fff528b47b120718a093c726b942f2e8af6db15",
         "type": "github"
       },
       "original": {
         "owner": "pythoneda",
-        "ref": "0.0.1a12",
+        "ref": "0.0.1a15",
         "repo": "base",
+        "type": "github"
+      }
+    },
+    "pythoneda-shared-git": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixos": [
+          "nixos"
+        ],
+        "pythoneda-base": [
+          "pythoneda-base"
+        ]
+      },
+      "locked": {
+        "lastModified": 1687461207,
+        "narHash": "sha256-AXKVQFzp8Yby9gAsoDxOp/9l61ewC2CVbxx9UE0Q9KE=",
+        "owner": "pythoneda-shared",
+        "repo": "git",
+        "rev": "6b1aa8c5fc63cf526fb158ee81350c73d799ef53",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pythoneda-shared",
+        "ref": "0.0.1a1",
+        "repo": "git",
         "type": "github"
       }
     },
@@ -87,8 +87,8 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixos": "nixos",
-        "poetry2nix": "poetry2nix",
-        "pythoneda-base": "pythoneda-base"
+        "pythoneda-base": "pythoneda-base",
+        "pythoneda-shared-git": "pythoneda-shared-git"
       }
     }
   },

@@ -18,8 +18,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from PythonEDA.event import Event
-from PythonEDA.value_object import attribute, primary_key_attribute
+from pythoneda.event import Event
+from pythoneda.value_object import attribute, primary_key_attribute
 
 from typing import Dict
 

@@ -1,9 +1,9 @@
 """
 pythonedagitpython/git_repo_resolver.py
 
-This file defines the GitRepoResolver event listener class.
+This file defines the PythonGitRepoResolver event listener class.
 
-Copyright (C) 2023-today rydnr's pythoneda/git-repositories
+Copyright (C) 2023-today rydnr's pythoneda/git-python
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,26 +20,27 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from pythoneda.event import Event
 from pythoneda.event_listener import EventListener
-from pythonedagitpython.git_repo import GitRepo
-from pythonedagitpython.git_repo_requested import GitRepoRequested
+from pythonedagitpython.python_git_repo import PythonGitRepo
+from pythonedagitpython.python_git_repo_found import PythonGitRepoFound
+from pythonedagitpython.git_repo_requested_for_python_package import GitRepoRequestedForPythonPackage
 
 import asyncio
 import logging
 from typing import Dict, List, Type
 
 
-class GitRepoResolver(EventListener):
+class PythonGitRepoResolver(EventListener):
     """
-    Resolves git repositories.
+    Resolves Git repositories for Python projects.
 
-    Class name: GitRepoResolver
+    Class name: PythonGitRepoResolver
 
     Responsibilities:
         - Resolves git repositories.
-        - Listens for GitRepoRequested events.
+        - Listens for GitRepoRequestedForPythonPackage events.
 
     Collaborators:
-        - GitRepoRequested: Triggers this class to resolve git repositories.
+        - GitRepoRequestedForPythonPackage: Triggers this class to resolve git repositories.
     """
 
     @classmethod
@@ -49,7 +50,7 @@ class GitRepoResolver(EventListener):
         :return: The list of supported events.
         :rtype: List
         """
-        return [GitRepoRequested]
+        return [GitRepoRequestedForPythonPackage]
 
     @classmethod
     def fix_url(cls, url: str) -> str:
@@ -98,20 +99,20 @@ class GitRepoResolver(EventListener):
         return result
 
     @classmethod
-    async def listenGitRepoRequested(cls, event: GitRepoRequested) -> GitRepo:
+    async def listenGitRepoRequested(cls, event: GitRepoRequestedForPythonPackage) -> PythonGitRepo:
         """
-        Gets notified when a GitRepoRequested event is emitted.
+        Gets notified when a GitRepoRequestedForPythonPackage event is emitted.
         :param event: The event.
-        :type event: GitRepoRequested
-        :return: The GitRepo found, if any.
-        :rtype: GitRepo
+        :type event: GitRepoRequestedForPythonPackage
+        :return: The PythonGitRepo found, if any.
+        :rtype: PythonGitRepo
         """
         for url in cls.extract_urls(event.info):
             repo_url, subfolder = GitRepo.extract_url_and_subfolder(url)
-            if GitRepo.url_is_a_git_repo(repo_url):
+            if PythonGitRepo.url_is_a_git_repo(repo_url):
                 asyncio.ensure_future(
                     cls.emit(
-                        GitRepoFound(
+                        PythonGitRepoFound(
                             event.package_name,
                             event.package_version,
                             repo_url,
