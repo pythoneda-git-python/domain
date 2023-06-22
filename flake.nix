@@ -75,32 +75,32 @@
               inherit description license homepage maintainers;
             };
           };
-        pythoneda-git-python-0_0_1a7-for =
+        pythoneda-git-python-0_0_1a8-for =
           { pythoneda-base, pythoneda-shared-git, python }:
           pythoneda-git-python-for {
-            version = "0.0.1a7";
+            version = "0.0.1a8";
             inherit pythoneda-base pythoneda-shared-git python;
           };
       in rec {
         packages = rec {
-          pythoneda-git-python-0_0_1a7-python38 =
-            pythoneda-git-python-0_0_1a7-for {
+          pythoneda-git-python-0_0_1a8-python38 =
+            pythoneda-git-python-0_0_1a8-for {
               pythoneda-base =
                 pythoneda-base.packages.${system}.pythoneda-base-latest-python38;
               pythoneda-shared-git =
                 pythoneda-shared-git.packages.${system}.pythoneda-shared-git-latest-python38;
               python = pkgs.python38;
             };
-          pythoneda-git-python-0_0_1a7-python39 =
-            pythoneda-git-python-0_0_1a7-for {
+          pythoneda-git-python-0_0_1a8-python39 =
+            pythoneda-git-python-0_0_1a8-for {
               pythoneda-base =
                 pythoneda-base.packages.${system}.pythoneda-base-latest-python39;
               pythoneda-shared-git =
                 pythoneda-shared-git.packages.${system}.pythoneda-shared-git-latest-python39;
               python = pkgs.python39;
             };
-          pythoneda-git-python-0_0_1a7-python310 =
-            pythoneda-git-python-0_0_1a7-for {
+          pythoneda-git-python-0_0_1a8-python310 =
+            pythoneda-git-python-0_0_1a8-for {
               pythoneda-base =
                 pythoneda-base.packages.${system}.pythoneda-base-latest-python310;
               pythoneda-shared-git =
@@ -108,43 +108,43 @@
               python = pkgs.python310;
             };
           pythoneda-git-python-latest-python38 =
-            pythoneda-git-python-0_0_1a7-python38;
+            pythoneda-git-python-0_0_1a8-python38;
           pythoneda-git-python-latest-python39 =
-            pythoneda-git-python-0_0_1a7-python39;
+            pythoneda-git-python-0_0_1a8-python39;
           pythoneda-git-python-latest-python310 =
-            pythoneda-git-python-0_0_1a7-python310;
+            pythoneda-git-python-0_0_1a8-python310;
           pythoneda-git-python-latest = pythoneda-git-python-latest-python310;
           default = packages.pythoneda-git-python-latest;
         };
         defaultPackage = packages.default;
         devShells = rec {
-          pythoneda-git-python-0_0_1a7-python38 = shared.devShell-for {
-            package = packages.pythoneda-git-python-0_0_1a7-python38;
+          pythoneda-git-python-0_0_1a8-python38 = shared.devShell-for {
+            package = packages.pythoneda-git-python-0_0_1a8-python38;
             pythoneda-base =
               pythoneda-base.packages.${system}.pythoneda-base-latest-python38;
             python = pkgs.python38;
             inherit pkgs nixpkgsRelease;
           };
-          pythoneda-git-python-0_0_1a7-python39 = shared.devShell-for {
-            package = packages.pythoneda-git-python-0_0_1a7-python39;
+          pythoneda-git-python-0_0_1a8-python39 = shared.devShell-for {
+            package = packages.pythoneda-git-python-0_0_1a8-python39;
             pythoneda-base =
               pythoneda-base.packages.${system}.pythoneda-base-latest-python39;
             python = pkgs.python39;
             inherit pkgs nixpkgsRelease;
           };
-          pythoneda-git-python-0_0_1a7-python310 = shared.devShell-for {
-            package = packages.pythoneda-git-python-0_0_1a7-python310;
+          pythoneda-git-python-0_0_1a8-python310 = shared.devShell-for {
+            package = packages.pythoneda-git-python-0_0_1a8-python310;
             pythoneda-base =
               pythoneda-base.packages.${system}.pythoneda-base-latest-python310;
             python = pkgs.python310;
             inherit pkgs nixpkgsRelease;
           };
           pythoneda-git-python-latest-python38 =
-            pythoneda-git-python-0_0_1a7-python38;
+            pythoneda-git-python-0_0_1a8-python38;
           pythoneda-git-python-latest-python39 =
-            pythoneda-git-python-0_0_1a7-python39;
+            pythoneda-git-python-0_0_1a8-python39;
           pythoneda-git-python-latest-python310 =
-            pythoneda-git-python-0_0_1a7-python310;
+            pythoneda-git-python-0_0_1a8-python310;
           pythoneda-git-python-latest = pythoneda-git-python-latest-python310;
           default = pythoneda-git-python-latest;
         };
