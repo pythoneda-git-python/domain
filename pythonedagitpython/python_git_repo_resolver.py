@@ -20,9 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from pythoneda.event import Event
 from pythoneda.event_listener import EventListener
+from pythonedaeventgitpython.python_git_repo_found import PythonGitRepoFound
+from pythonedaeventgitpython.git_repo_requested_for_python_package import GitRepoRequestedForPythonPackage
 from pythonedagitpython.python_git_repo import PythonGitRepo
-from pythonedagitpython.python_git_repo_found import PythonGitRepoFound
-from pythonedagitpython.git_repo_requested_for_python_package import GitRepoRequestedForPythonPackage
 
 import asyncio
 import logging

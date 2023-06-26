@@ -9,6 +9,12 @@
       inputs.nixos.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
     };
+    pythoneda-event-git-python = {
+      url = "github:pythoneda-event/git-python/0.0.1a1";
+      inputs.nixos.follows = "nixos";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.pythoneda-base.follows = "pythoneda-base";
+    };
     pythoneda-shared-git = {
       url = "github:pythoneda-shared/git/0.0.1a1";
       inputs.nixos.follows = "nixos";
@@ -29,8 +35,8 @@
         maintainers = with pkgs.lib.maintainers; [ ];
         nixpkgsRelease = "nixos-23.05";
         shared = import ./nix/devShells.nix;
-        pythoneda-git-python-for =
-          { version, pythoneda-base, pythoneda-shared-git, python }:
+        pythoneda-git-python-for = { version, pythoneda-base
+          , pythoneda-shared-git, pythoneda-event-git-python, python }:
           let
             pname = "pythoneda-git-python";
             pythonVersionParts = builtins.splitVersion python.version;
@@ -50,6 +56,7 @@
             nativeBuildInputs = with python.pkgs; [ pip pkgs.jq poetry-core ];
             propagatedBuildInputs = with python.pkgs; [
               pythoneda-base
+              pythoneda-event-git-python
               pythoneda-shared-git
             ];
 
@@ -62,6 +69,7 @@
               source .env/bin/activate
               pip install ${pythoneda-base}/dist/pythoneda_base-${pythoneda-base.version}-py3-none-any.whl
               pip install ${pythoneda-shared-git}/dist/pythoneda_shared_git-${pythoneda-shared-git.version}-py3-none-any.whl
+              pip install ${pythoneda-event-git-python}/dist/pythoneda_event_git_python-${pythoneda-event-git-python.version}-py3-none-any.whl
               rm -rf .env
             '';
 
@@ -75,11 +83,12 @@
               inherit description license homepage maintainers;
             };
           };
-        pythoneda-git-python-0_0_1a8-for =
-          { pythoneda-base, pythoneda-shared-git, python }:
+        pythoneda-git-python-0_0_1a8-for = { pythoneda-base
+          , pythoneda-shared-git, pythoneda-event-git-python, python }:
           pythoneda-git-python-for {
             version = "0.0.1a8";
-            inherit pythoneda-base pythoneda-shared-git python;
+            inherit pythoneda-base pythoneda-shared-git
+              pythoneda-event-git-python python;
           };
       in rec {
         packages = rec {
@@ -89,6 +98,8 @@
                 pythoneda-base.packages.${system}.pythoneda-base-latest-python38;
               pythoneda-shared-git =
                 pythoneda-shared-git.packages.${system}.pythoneda-shared-git-latest-python38;
+              pythoneda-event-git-python =
+                pythoneda-event-git-python.packages.${system}.pythoneda-event-git-python-latest-python38;
               python = pkgs.python38;
             };
           pythoneda-git-python-0_0_1a8-python39 =
@@ -97,6 +108,8 @@
                 pythoneda-base.packages.${system}.pythoneda-base-latest-python39;
               pythoneda-shared-git =
                 pythoneda-shared-git.packages.${system}.pythoneda-shared-git-latest-python39;
+              pythoneda-event-git-python =
+                pythoneda-event-git-python.packages.${system}.pythoneda-event-git-python-latest-python39;
               python = pkgs.python39;
             };
           pythoneda-git-python-0_0_1a8-python310 =
@@ -105,6 +118,8 @@
                 pythoneda-base.packages.${system}.pythoneda-base-latest-python310;
               pythoneda-shared-git =
                 pythoneda-shared-git.packages.${system}.pythoneda-shared-git-latest-python310;
+              pythoneda-event-git-python =
+                pythoneda-event-git-python.packages.${system}.pythoneda-event-git-python-latest-python310;
               python = pkgs.python310;
             };
           pythoneda-git-python-latest-python38 =
