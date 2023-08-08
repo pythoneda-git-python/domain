@@ -1,9 +1,9 @@
 """
-pythonedagitpython/git_repo_resolver.py
+pythoneda/git_python/git_repo_resolver.py
 
 This file defines the PythonGitRepoResolver event listener class.
 
-Copyright (C) 2023-today rydnr's pythoneda/git-python
+Copyright (C) 2023-today rydnr's pythoneda-git-python/domain
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,16 +18,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from pythoneda.event import Event
-from pythoneda.event_listener import EventListener
-from pythonedaeventgitpython.python_git_repo_found import PythonGitRepoFound
-from pythonedaeventgitpython.git_repo_requested_for_python_package import GitRepoRequestedForPythonPackage
-from pythonedagitpython.python_git_repo import PythonGitRepo
-
 import asyncio
+from pythoneda import Event, EventListener
+from pythoneda.git_python import PythonGitRepo
+from pythoneda.git_python.events import GitRepoRequestedForPythonPackage, PythonGitRepoFound
 import logging
 from typing import Dict, List, Type
-
 
 class PythonGitRepoResolver(EventListener):
     """

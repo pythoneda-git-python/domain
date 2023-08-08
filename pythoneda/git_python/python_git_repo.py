@@ -1,9 +1,9 @@
 """
-pythonedagitpython/python_git_repo.py
+pythoneda/git_python/python_git_repo.py
 
 This file defines the PythonGitRepo class.
 
-Copyright (C) 2023-today rydnr's pythoneda/git-python
+Copyright (C) 2023-today rydnr's pythoneda-git-python/domain
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,12 +18,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from pythoneda.value_object import attribute
-from pythonedasharedgit.git_repo import GitRepo
-
 import abc
+from pythoneda import attribute
+from pythoneda.shared.git import GitRepo
 from typing import Dict
-
 
 class PythonGitRepo(GitRepo, abc.ABC):
     """
